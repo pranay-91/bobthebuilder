@@ -1,0 +1,11 @@
+{
+  "name": "bob_the_builder",
+  "version": "1.0.0",
+  "description": "Simple http application that pushes message to spark room",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "Pranay Pradhananga",
+  "license": "MIT"
+}
