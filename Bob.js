@@ -55,8 +55,8 @@ class Bob {
   }
 
   execute() {
-    this._roomId = getRoomId(this._roomName)
-    sendMessage(this._roomId, this._buildMessage)
+    this._roomId = this.getRoomId(this._roomName)
+    this.sendMessage(this._roomId, this._buildMessage)
   }
 
 }

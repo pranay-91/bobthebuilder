@@ -4,8 +4,11 @@
   "description": "Simple http application that pushes message to spark room",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test"
+    "test": "./node_modules/.bin/jasmine-node --captureExceptions --verbose spec"
   },
   "author": "Pranay Pradhananga",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.16.2"
+  }
 }
