@@ -29,17 +29,20 @@ class Bob {
     })
   }
 
-  sendMessage() {
+  getRoomId(roomName) {
     const roomId = this._instance.get('/rooms', {}).then( res=> {
       res.items.forEach(room => {
         if(room.title === roomName)
           return room.id
       })
     })
+    return roomId
+  }
 
+  sendMessage(roomId, message) {
     const config_data={
       "roomId": roomId,
-      "text": this._buildMessage
+      "text": message
     }
      return this._instance.post('/messages', config_data)
   }
