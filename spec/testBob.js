@@ -1,29 +1,23 @@
 var Bob = require("../Bob.js")
 
-const testInput={
-  token = "MDAyMzI1MDAtNGI5My00YWMzLThjYWItYzcyYmRkNTBhZDFhNmM5YmIwZDUtOWZj"
-  roomName = "Drone Build Notifications on Spark"
-  buildMessage = "This is a test message"
-}
-
-const testResult={
-  roomId="Y2lzY29zcGFyazovL3VzL1JPT00vMjEzY2JmZjAtNTcwMi0xMWU3LWE5ZTktZjk5MWVlZjY1YmNi"
-}
-
-
 describe("Test Bob the Builder", function() {
 
   describe("Bob sends the message", function() {
+    it("should have necessary inputs to operate", function(done) {
+      expect(testBob.canOperate()).toBe(true)
+      done()
+    })
+
     it("returns the correct roomId", function(done) {
       testBob = new Bob()
-      const roomId = Bob.getRoomId(testInput.roomName)
-      expect(roomId).toBe(testResult.roomId)
+      const roomId = Bob.getRoomId(process.TEST_ROOMNAME)
+      expect(roomId).toBe(process.env.TEST_ROOMID)
       done();
     })
 
     it("succesfully sends the message", function(done) {
       testBob = new Bob({token: testInput.token})
-      const res = testBob.sendMessage(testResult.roomId, testInput.message )
+      const res = testBob.sendMessage(process.env.TEST_ROOMID, process.env.TEST_MESSAGE)
       expect(res.statusCode).toBe(200)
       done();
     })
