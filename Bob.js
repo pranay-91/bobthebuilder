@@ -1,65 +1,62 @@
 const axios = require('axios')
 
 class Bob {
-  constructor() {
-    this._token = process.env.PLUGIN_TOKEN
-    this._roomName = process.env.PLUGIN_ROOMNAME
-    this._roomId=""
-
-    this._buildStatus = process.env.DRONE_BUILD_STATUS
-    this._buildNumber = process.env.DRONE_BUILD_NUMBER
-    this._buildTag = process.env.DRONE_TAG
-    this._buildLink = process.env.BUILD_LINK
-
-    this._buildCommit = process.env.DRONE_BUILD_COMMIT
-    this._buildCommitSha = process.env.DRONE_COMMIT_SHA
-    this._buildCommitBranch = proces.env.DRONE_COMMIT_BRANCH
-    this._buildCommitAuthor = process.env.DRONE_COMMIT_AUTHOR
-
-    this._buildRepoOwner = process.env.DRONE_REPO_OWNER
-    this._buildRepoName = process.env.DRONE_REPO_NAME
-
-    this._buildMessage = process.env.PLUGIN_MESSAGE
-
+  constructor(params) {
+    this._params = params
     this._instance = axios.create({
       baseURL:'https://api.ciscospark.com/v1',
       headers: {
-        'Authorization':'Bearer' + this._token
+        'Authorization':'Bearer ' + this._params.token
       }
     })
   }
 
   canOperate() {
-    if(this._token === "" || this._roomName==="" || this.buildMessage==="")  {
+    if(this._params.token === "" || this._params.roomName===""
+    || this._params.buildMessage===""
+    )  {
       return false
     }
     return true
   }
 
-  getRoomId(roomName) {
-    const roomId = this._instance.get('/rooms', {}).then( res=> {
-      res.items.forEach(room => {
-        if(room.title === roomName)
-          return room.id
-      })
+  findRoomId(){
+    return new Promise((resolve,reject)=> {
+      this._instance.get('/rooms',{})
+        .then(res=> {
+          const index = res.data.items.findIndex(room=> room.title===this._params.roomName)
+          if(index!=-1) {
+            resolve(res.data.items[index].id)
+          }
+          else {
+            reject("Cannot find the room of name: "+ this._params.roomName)
+          }
+        })
     })
-    return roomId
   }
 
-  sendMessage(roomId, message) {
-    const config_data={
-      "roomId": roomId,
-      "text": message
+  sendMessage() {
+
+    if(this._params.roomId==="") {
+      throw new Error("RoomId does not exist")
     }
-     return this._instance.post('/messages', config_data)
+    const config_data={
+      "roomId": this._params.roomId,
+      "text": this._params.buildMessage
+    }
+    this._instance.post('/messages', config_data)
   }
+
 
   execute() {
-    this._roomId = this.getRoomId(this._roomName)
-    this.sendMessage(this._roomId, this._buildMessage)
+    this.findRoomId()
+      .then(id=>{
+        this._params.roomId=id
+        this.sendMessage()
+      })
+      .catch(error=>console.log(error))
   }
-
 }
 
 
-export default Bob
+module.exports = Bob
