@@ -13,7 +13,7 @@
 
 
 FROM alpine:latest
-RUN apk update && apk add ca-certificates nodejs && rm -rf /var/cache/apk/*
+RUN apk update && apk add --update ca-certificates nodejs nodejs-npm && rm -rf /var/cache/apk/*
 WORKDIR /node
 ADD package.json /node/
 ADD index.js /node/
