@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Simple http application that pushes message to spark room",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node --captureExceptions --verbose spec",
     "start": "node index.js"
