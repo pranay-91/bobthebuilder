@@ -6,7 +6,8 @@
   "bin": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node --captureExceptions --verbose spec",
-    "start": "node index.js"
+    "start": "node index.js",
+    "release": "./node_modules/.bin/pkg --targets node7-linux-x64 --output bobthebuilder.bin ."
   },
   "author": "Pranay Pradhananga",
   "license": "MIT",
@@ -14,6 +15,7 @@
     "axios": "^0.16.2"
   },
   "devDependencies": {
-    "jasmine-node": "^1.14.5"
+    "jasmine-node": "^1.14.5",
+    "pkg": "^4.1.1"
   }
 }
