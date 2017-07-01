@@ -22,6 +22,11 @@ const params= {
 }
 
 
+console.log(process.env.PLUGIN_TOKEN);
+console.log(process.env.PLUGIN_ROOMNAME);
+console.log(process.env.PLUGIN_MESSAGE);
+console.log(params);
+
 
 const bob = new Bob(params)
 if(bob.canOperate()) {

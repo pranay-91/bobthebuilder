@@ -7,7 +7,7 @@
   "scripts": {
     "test": "./node_modules/.bin/jasmine-node --captureExceptions --verbose spec",
     "start": "node index.js",
-    "release": "./node_modules/.bin/pkg --targets node7-linux-x64 --output bobthebuilder.bin ."
+    "release": "./node_modules/.bin/pkg --output bobthebuilder ."
   },
   "author": "Pranay Pradhananga",
   "license": "MIT",
