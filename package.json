@@ -12,5 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.16.2"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
   }
 }
